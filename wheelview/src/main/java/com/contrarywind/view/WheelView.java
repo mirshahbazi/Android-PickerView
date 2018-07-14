@@ -278,7 +278,7 @@ public class WheelView extends View {
             }
         }
         if(action==ACTION.CLICK){
-            onItemSelected();
+            onClicK();
         }
         //When it stops, the position is offset, not all of them can stop correctly to the middle position. Here, the text position is moved back to the middle.
         mFuture = mExecutor.scheduleWithFixedDelay(new SmoothScrollTimerTask(this, mOffset), 0, 10, TimeUnit.MILLISECONDS);
@@ -353,6 +353,17 @@ public class WheelView extends View {
                     onItemSelectedListener.onItemSelected(getCurrentItem());
                 }
             }, 200L);
+        }
+    }
+
+    public final void onClicK(){
+        if (onItemSelectedListener != null) {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onItemSelectedListener.onItemSelected(getCurrentItem());
+                }
+            }, 1L);
         }
     }
 
