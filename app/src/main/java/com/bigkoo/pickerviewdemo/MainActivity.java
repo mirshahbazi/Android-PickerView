@@ -35,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
             // pvTime.setDate(Calendar.getInstance());
-           /* pvTime.show(); //show timePicker*/
+            /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -266,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
-               /*.animGravity(Gravity.RIGHT)// default is center*/
+                /*.animGravity(Gravity.RIGHT)// default is center*/
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
@@ -314,11 +316,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(options2)
-                       /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
+                        /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
                 btn_Options.setText(tx);
             }
         })
-                .setTitleText("城市选择")
+                .setTitleText("salam")
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setDividerColor(Color.LTGRAY)//设置分割线的颜色
                 .setSelectOptions(0, 1)//默认选中项
@@ -330,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.LTGRAY)
                 .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setLabels("省", "市", "区")
+                .setLabels("1", "2", "3")
                 .setBackgroundId(0x00000000) //设置外部遮罩颜色
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                     @Override
@@ -354,52 +356,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 注意事项：
          * 自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针。
          * 具体可参考demo 里面的两个自定义layout布局。
+         *
+         *
          */
+
+        final List<String> listStrings = new LinkedList<String>();
+        listStrings.add("1");
+        listStrings.add("2");
+        listStrings.add("3");
+        listStrings.add("4");
+        listStrings.add("5");
+        listStrings.add("6");
+        listStrings.add("7");
+        listStrings.add("8");
+        listStrings.add("9");
+        listStrings.add("10");
+        listStrings.add("11");
+        listStrings.add("12");
+        listStrings.add("13");
+        listStrings.add("14");
+        listStrings.add("15");
+        listStrings.add("16");
+        listStrings.add("17");
+        listStrings.add("18");
+        listStrings.add("19");
+        listStrings.add("20");
         pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = cardItem.get(options1).getPickerViewText();
-                btn_CustomOptions.setText(tx);
+                //  String tx = cardItem.get(options1).getPickerViewText();
+                //btn_CustomOptions.setText(tx);
+//                pvCustomOptions.setPicker(listStrings);
             }
         })
                 .setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        final TextView tvAdd = (TextView) v.findViewById(R.id.tv_add);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomOptions.returnData();
-                                pvCustomOptions.dismiss();
-                            }
-                        });
+//                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+//                        final TextView tvAdd = (TextView) v.findViewById(R.id.tv_add);
+//                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+//                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                pvCustomOptions.returnData();
+//                                pvCustomOptions.dismiss();
+//                            }
+//                        });
 
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomOptions.dismiss();
-                            }
-                        });
+//                        ivCancel.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                pvCustomOptions.dismiss();
+//                            }
+//                        });
 
-                        tvAdd.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                getCardData();
-                                pvCustomOptions.setPicker(cardItem);
-                            }
-                        });
+//                        tvAdd.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                getCardData();
+//
+//                            }
+//                        });
 
+                    }
+                })
+                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                    @Override
+                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                        String str = "no:" + listStrings.get(options1);
+                        //Toast.makeText(MainActivity.this, options1, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .isDialog(true)
                 .build();
-
-        pvCustomOptions.setPicker(cardItem);//添加数据
-
-
+        pvCustomOptions.setPicker(listStrings);//添加数据
     }
 
     private void initNoLinkOptionsPicker() {// 不联动的多级选项
@@ -474,12 +505,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getCardData() {
         for (int i = 0; i < 5; i++) {
-            cardItem.add(new CardBean(i, "No.ABC12345 " + i));
+            cardItem.add(new CardBean(i, "1 " + i));
         }
 
         for (int i = 0; i < cardItem.size(); i++) {
             if (cardItem.get(i).getCardNo().length() > 6) {
-                String str_item = cardItem.get(i).getCardNo().substring(0, 6) + "...";
+                String str_item = cardItem.get(i).getCardNo().substring(0, 6) + "";
                 cardItem.get(i).setCardNo(str_item);
             }
         }

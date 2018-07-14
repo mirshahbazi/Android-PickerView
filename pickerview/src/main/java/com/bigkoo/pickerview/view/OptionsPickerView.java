@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
+import com.contrarywind.listener.OnItemSelectedListener;
 
 import java.util.List;
 
@@ -24,8 +26,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
-
-
+    private OnOptionsSelectChangeListener optionsSelectChangeListener;
+    private OnItemSelectedListener wheelListener_option1;
     public OptionsPickerView(PickerOptions pickerOptions) {
         super(pickerOptions.context);
         mPickerOptions = pickerOptions;
@@ -62,7 +64,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             btnSubmit.setTextColor(mPickerOptions.textColorConfirm);
             btnCancel.setTextColor(mPickerOptions.textColorCancel);
             tvTitle.setTextColor(mPickerOptions.textColorTitle);
-            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
+//            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
 
             //设置文字大小
             btnSubmit.setTextSize(mPickerOptions.textSizeSubmitCancel);
@@ -74,7 +76,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
-        optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
+//        optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.isRestoreItem);
         if (mPickerOptions.optionsSelectChangeListener != null) {
@@ -95,6 +97,20 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextColorOut(mPickerOptions.textColorOut);
         wheelOptions.setTextColorCenter(mPickerOptions.textColorCenter);
         wheelOptions.isCenterLabel(mPickerOptions.isCenterLabel);
+
+        wheelListener_option1 = new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                if (optionsSelectChangeListener != null) {
+
+                }
+                else{
+                    returnData();
+                }
+            }
+        };
+
+
     }
 
     /**
@@ -188,4 +204,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public boolean isDialog() {
         return mPickerOptions.isDialog;
     }
+
+
+    public void setOptionsSelectChangeListener(OnOptionsSelectChangeListener optionsSelectChangeListener) {
+        this.optionsSelectChangeListener = optionsSelectChangeListener;
+    }
+
+
+
 }

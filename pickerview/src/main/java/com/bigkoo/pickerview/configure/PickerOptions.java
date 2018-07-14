@@ -24,9 +24,9 @@ public class PickerOptions {
 
     //常量
     private static final int PICKER_VIEW_BTN_COLOR_NORMAL = 0xFF057dff;
-    private static final int PICKER_VIEW_BG_COLOR_TITLE = 0xFFf5f5f5;
-    private static final int PICKER_VIEW_COLOR_TITLE = 0xFF000000;
-    private static final int PICKER_VIEW_BG_COLOR_DEFAULT = 0xFFFFFFFF;
+    private static final int PICKER_VIEW_BG_COLOR_TITLE = 0xffffa000;
+    private static final int PICKER_VIEW_COLOR_TITLE = 0xffffa000;
+    private static final int PICKER_VIEW_BG_COLOR_DEFAULT = 0xffffa000;
 
     public static final int TYPE_PICKER_OPTIONS = 1;
     public static final int TYPE_PICKER_TIME = 2;
@@ -100,7 +100,7 @@ public class PickerOptions {
 
     public int textColorOut = 0xFFa8a8a8; //分割线以外的文字颜色
     public int textColorCenter = 0xFF2a2a2a; //分割线之间的文字颜色
-    public int dividerColor = 0xFFd5d5d5; //分割线的颜色
+    public int dividerColor = 0xffffa000; //分割线的颜色
     public int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
 
     public float lineSpacingMultiplier = 1.6f; // 条目间距倍数 默认1.6
@@ -109,7 +109,7 @@ public class PickerOptions {
     public boolean cancelable = true;//是否能取消
     public boolean isCenterLabel = false;//是否只显示中间的label,默认每个item都显示
     public Typeface font = Typeface.MONOSPACE;//字体样式
-    public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型
+    public WheelView.DividerType dividerType = WheelView.DividerType.WRAP;//分隔线类型
 
 
 }

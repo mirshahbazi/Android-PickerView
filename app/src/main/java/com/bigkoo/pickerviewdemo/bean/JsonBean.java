@@ -1,7 +1,7 @@
 package com.bigkoo.pickerviewdemo.bean;
 
 
-import com.contrarywind.interfaces.IPickerViewData;
+
 
 import java.util.List;
 

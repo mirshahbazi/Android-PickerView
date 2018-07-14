@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -154,7 +155,7 @@ public class WheelView extends View {
             mGravity = a.getInt(R.styleable.pickerview_wheelview_gravity, Gravity.CENTER);
             textColorOut = a.getColor(R.styleable.pickerview_wheelview_textColorOut, 0xFFa8a8a8);
             textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
-            dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
+            dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xffa000);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
             a.recycle();//回收内存
@@ -201,6 +202,11 @@ public class WheelView extends View {
         paintCenterText.setTypeface(typeface);
         paintCenterText.setTextSize(textSize);
 
+        //by mam
+        paintCenterText.setColor(0xffffa000);
+        paintCenterText.setStrokeWidth(3);
+        paintCenterText.setStyle(Paint.Style.STROKE);
+        //----------------------------
         paintIndicator = new Paint();
         paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
@@ -261,17 +267,20 @@ public class WheelView extends View {
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
-    public void smoothScroll(ACTION action) {//平滑滚动的实现
+    public void smoothScroll(ACTION action) {//Smooth scrolling implementation
         cancelFuture();
         if (action == ACTION.FLING || action == ACTION.DAGGLE) {
             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
-            if ((float) mOffset > itemHeight / 2.0F) {//如果超过Item高度的一半，滚动到下一个Item去
+            if ((float) mOffset > itemHeight / 2.0F) {//If it exceeds half of the item height, scroll to the next item.
                 mOffset = (int) (itemHeight - (float) mOffset);
             } else {
                 mOffset = -mOffset;
             }
         }
-        //停止的时候，位置有偏移，不是全部都能正确停止到中间位置的，这里把文字位置挪回中间去
+        if(action==ACTION.CLICK){
+            onItemSelected();
+        }
+        //When it stops, the position is offset, not all of them can stop correctly to the middle position. Here, the text position is moved back to the middle.
         mFuture = mExecutor.scheduleWithFixedDelay(new SmoothScrollTimerTask(this, mOffset), 0, 10, TimeUnit.MILLISECONDS);
     }
 
@@ -422,8 +431,13 @@ public class WheelView extends View {
                 startX = 10;
             }
             endX = measuredWidth - startX;
+
             canvas.drawLine(startX, firstLineY, endX, firstLineY, paintIndicator);
+            canvas.drawLine(startX+1, firstLineY+1, endX+1, firstLineY+1, paintIndicator);
+            canvas.drawLine(startX+1, firstLineY+1, endX+1, firstLineY+1, paintIndicator);
             canvas.drawLine(startX, secondLineY, endX, secondLineY, paintIndicator);
+            canvas.drawLine(startX, secondLineY+1, endX+1, secondLineY+1, paintIndicator);
+            canvas.drawLine(startX, secondLineY+1, endX+1, secondLineY+1, paintIndicator);
         } else {
             canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
             canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
@@ -501,19 +515,19 @@ public class WheelView extends View {
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
-                    //设置选中项
+                    //Set selected items
                     selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
 
                 } else {
-                    // 其他条目
+                    // Other items
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    // 控制文字倾斜角度
+                    // Control text tilt angle
                     paintOuterText.setTextSkewX((textXOffset == 0 ? 0 : (textXOffset > 0 ? 1 : -1)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEWX * offsetCoefficient);
-                    // 控制透明度
+                    // Control transparency
                     paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
-                    // 控制文字水平偏移距离
+                    // Control text horizontal offset distance
                     canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
                     canvas.restore();
                 }
@@ -691,7 +705,7 @@ public class WheelView extends View {
                         // 处理拖拽事件
                         smoothScroll(ACTION.DAGGLE);
                     } else {
-                        // 处理条目点击事件
+                        // Handling entry click events
                         smoothScroll(ACTION.CLICK);
                     }
                 }

@@ -65,7 +65,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             btnSubmit.setTextColor(mPickerOptions.textColorConfirm);
             btnCancel.setTextColor(mPickerOptions.textColorCancel);
             tvTitle.setTextColor(mPickerOptions.textColorTitle);
-            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
+//            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
 
             //设置文字大小
             btnSubmit.setTextSize(mPickerOptions.textSizeSubmitCancel);
@@ -77,7 +77,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
-        timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
+//        timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         initWheelTime(timePickerView);
     }
