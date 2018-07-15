@@ -346,14 +346,14 @@ public class WheelView extends View {
     }
 
     public final void onItemSelected() {
-        if (onItemSelectedListener != null) {
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onItemSelectedListener.onItemSelected(getCurrentItem());
-                }
-            }, 200L);
-        }
+//        if (onItemSelectedListener != null) {
+//            postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    onItemSelectedListener.onItemSelected(getCurrentItem());
+//                }
+//            }, 200L);
+//        }
     }
 
     public final void onClicK(){
